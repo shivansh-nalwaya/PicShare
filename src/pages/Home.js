@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Icon, Button, Row, Modal, Input, Col, Upload } from "antd";
 import Navbar from "../components/Navbar";
+import UploadModal from "../components/UploadModal";
 import PictureCard from "../components/PictureCard";
 
 const Container = styled.div`
@@ -80,77 +80,37 @@ class App extends Component {
             });
             this.setState({ data: this.sortPics(searchData) });
           }}
-          showModal={this.props.showModal}
+          showModal={this.showModal}
         />
         <Container>
-          <Modal
-            title="Upload Image"
+          <UploadModal
             visible={this.state.modalVisible}
-            onCancel={this.handleCancel}
-            footer={[
-              <Button key="cancel" onClick={this.handleCancel}>
-                Cancel
-              </Button>,
-              <Button key="upload" type="primary" onClick={this.handleOk}>
-                Upload
-              </Button>
-            ]}
-          >
-            <Row type="flex" justify="center" align="middle">
-              <Col span={8}>
-                <Upload
-                  fileList={this.state.fileList}
-                  onChange={e => {
-                    e.file.error = null;
-                    e.file.status = "done";
-                    this.setState({ fileList: [e.file] });
-                  }}
-                  action={e => {
-                    console.log(e);
-                    return new Promise((resolve, reject) => {
-                      const reader = new FileReader();
-                      reader.onload = () => resolve("reader.result");
-                      reader.onerror = error => reject(error);
-                      reader.readAsDataURL(e);
-                      this.setState({ file: reader, url: "" });
-                    });
-                  }}
-                >
-                  <Button>
-                    <Icon type="upload" /> Click to Upload
-                  </Button>
-                </Upload>
-              </Col>
-              <Col span={2}>OR</Col>
-              <Col span={12}>
-                <Input
-                  type="text"
-                  placeholder="Enter URL of the image"
-                  value={this.state.url}
-                  onChange={e => {
-                    this.setState({ url: e.target.value });
-                  }}
-                />
-              </Col>
-            </Row>
-            <Row
-              type="flex"
-              justify="center"
-              align="middle"
-              style={{ paddingTop: "1em" }}
-            >
-              <Col span={22}>
-                <Input
-                  type="text"
-                  placeholder="Enter Title"
-                  value={this.state.title}
-                  onChange={e => {
-                    this.setState({ title: e.target.value });
-                  }}
-                />
-              </Col>
-            </Row>
-          </Modal>
+            handleCancel={this.handleCancel}
+            handleOk={this.handleOk}
+            fileList={this.state.fileList}
+            url={this.state.url}
+            title={this.state.title}
+            onFileUpload={e => {
+              e.file.error = null;
+              e.file.status = "done";
+              this.setState({ fileList: [e.file] });
+            }}
+            actionFileUpload={e => {
+              return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve("reader.result");
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(e);
+                this.setState({ file: reader, url: "" });
+              });
+            }}
+            onUrlChange={e => {
+              this.setState({ url: e.target.value });
+            }}
+            onTitleChange={e => {
+              this.setState({ title: e.target.value });
+            }}
+          />
           {this.state.data.map((pic, index) => (
             <PictureCard
               key={index}
