@@ -1,21 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Icon, Button, Row, Modal, Input, Col, Upload } from "antd";
+import Navbar from "../components/Navbar";
 import PictureCard from "../components/PictureCard";
 
 const Container = styled.div`
   padding-top: 2em;
   padding-left: 1em;
-`;
-
-const Nav = styled.div`
-  padding-top: 1em;
-  padding-bottom: 1em;
-  border-bottom: 1px solid #eeeeee;
-`;
-
-const Logo = styled.div`
-  font-size: 2em;
 `;
 
 class App extends Component {
@@ -78,44 +69,19 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Nav>
-          <Row type="flex" justify="space-around" align="middle">
-            <Col span={2}>
-              <Logo>PicShare</Logo>
-            </Col>
-            <Col span={8}>
-              <div>
-                <Input
-                  placeholder="Search"
-                  onChange={e => {
-                    let text = e.target.value;
-                    let searchData = JSON.parse(
-                      localStorage.getItem("img_data")
-                    ).filter(d => {
-                      if (text === "") return true;
-                      return d.title
-                        .toLowerCase()
-                        .startsWith(text.toLowerCase());
-                    });
-                    this.setState({ data: this.sortPics(searchData) });
-                  }}
-                  prefix={
-                    <Icon type="search" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                />
-              </div>
-            </Col>
-            <Col span={8}>
-              <Row>
-                <Col span={4}>
-                  <Button size="large" icon="plus" onClick={this.showModal}>
-                    Upload Image
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Nav>
+        <Navbar
+          onInputChange={e => {
+            let text = e.target.value;
+            let searchData = JSON.parse(
+              localStorage.getItem("img_data")
+            ).filter(d => {
+              if (text === "") return true;
+              return d.title.toLowerCase().startsWith(text.toLowerCase());
+            });
+            this.setState({ data: this.sortPics(searchData) });
+          }}
+          showModal={this.props.showModal}
+        />
         <Container>
           <Modal
             title="Upload Image"
