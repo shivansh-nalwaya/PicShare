@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import { Container } from "../styles/Home";
 import Navbar from "../components/Navbar";
 import UploadModal from "../components/UploadModal";
 import PictureCard from "../components/PictureCard";
-
-const Container = styled.div`
-  padding-top: 2em;
-  padding-left: 1em;
-`;
 
 class App extends Component {
   constructor(props) {
@@ -66,20 +61,53 @@ class App extends Component {
     });
   };
 
+  onSearchInputChange = e => {
+    let text = e.target.value;
+    let searchData = JSON.parse(localStorage.getItem("img_data")).filter(d => {
+      if (text === "") return true;
+      return d.title.toLowerCase().startsWith(text.toLowerCase());
+    });
+    this.setState({ data: this.sortPics(searchData) });
+  };
+
+  onFileUpload = e => {
+    e.file.error = null;
+    e.file.status = "done";
+    this.setState({ fileList: [e.file] });
+  };
+
+  actionFileUpload = e => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve("reader.result");
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(e);
+      this.setState({ file: reader, url: "" });
+    });
+  };
+
+  onUrlChange = e => {
+    this.setState({ url: e.target.value });
+  };
+
+  onTitleChange = e => {
+    this.setState({ title: e.target.value });
+  };
+
+  onAddPicture = index => {
+    let pics = this.state.data;
+    pics.splice(index, 1);
+    localStorage.setItem("img_data", JSON.stringify(pics));
+    this.setState({
+      data: this.sortPics(pics)
+    });
+  };
+
   render() {
     return (
       <div>
         <Navbar
-          onInputChange={e => {
-            let text = e.target.value;
-            let searchData = JSON.parse(
-              localStorage.getItem("img_data")
-            ).filter(d => {
-              if (text === "") return true;
-              return d.title.toLowerCase().startsWith(text.toLowerCase());
-            });
-            this.setState({ data: this.sortPics(searchData) });
-          }}
+          onInputChange={this.onSearchInputChange}
           showModal={this.showModal}
         />
         <Container>
@@ -90,38 +118,17 @@ class App extends Component {
             fileList={this.state.fileList}
             url={this.state.url}
             title={this.state.title}
-            onFileUpload={e => {
-              e.file.error = null;
-              e.file.status = "done";
-              this.setState({ fileList: [e.file] });
-            }}
-            actionFileUpload={e => {
-              return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve("reader.result");
-                reader.onerror = error => reject(error);
-                reader.readAsDataURL(e);
-                this.setState({ file: reader, url: "" });
-              });
-            }}
-            onUrlChange={e => {
-              this.setState({ url: e.target.value });
-            }}
-            onTitleChange={e => {
-              this.setState({ title: e.target.value });
-            }}
+            onFileUpload={this.onFileUpload}
+            actionFileUpload={this.actionFileUpload}
+            onUrlChange={this.onUrlChange}
+            onTitleChange={this.onTitleChange}
           />
           {this.state.data.map((pic, index) => (
             <PictureCard
               key={index}
               pic={pic}
               onClick={() => {
-                let pics = this.state.data;
-                pics.splice(index, 1);
-                localStorage.setItem("img_data", JSON.stringify(pics));
-                this.setState({
-                  data: this.sortPics(pics)
-                });
+                this.onAddPicture(index);
               }}
             />
           ))}
