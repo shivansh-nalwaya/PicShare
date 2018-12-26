@@ -1,19 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Card, Icon, Button, Row, Modal, Input, Col, Upload } from "antd";
-import timeAgo from "node-time-ago";
-
-const { Meta } = Card;
+import { Icon, Button, Row, Modal, Input, Col, Upload } from "antd";
+import PictureCard from "../components/PictureCard";
 
 const Container = styled.div`
   padding-top: 2em;
   padding-left: 1em;
-`;
-
-const Picture = styled.div`
-  width: 30em;
-  display: inline-block;
-  padding: 1em;
 `;
 
 const Nav = styled.div`
@@ -25,23 +17,6 @@ const Nav = styled.div`
 const Logo = styled.div`
   font-size: 2em;
 `;
-
-const Thumb = props => {
-  let url = `url(${props.src})`;
-  return (
-    <div
-      style={{
-        backgroundImage: url,
-        backgroundSize: "100%",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center center",
-        borderBottom: "1px solid #eeeeee",
-        width: "27.84em",
-        height: "18em"
-      }}
-    />
-  );
-};
 
 class App extends Component {
   constructor(props) {
@@ -211,34 +186,18 @@ class App extends Component {
             </Row>
           </Modal>
           {this.state.data.map((pic, index) => (
-            <Picture key={index}>
-              <Card cover={<Thumb src={pic.Image} />}>
-                <Meta
-                  title={
-                    <Row type="flex" justify="space-between">
-                      {pic.title}
-                      <Button
-                        shape="circle"
-                        icon="delete"
-                        type="danger"
-                        onClick={() => {
-                          let pics = this.state.data;
-                          pics.splice(index, 1);
-                          localStorage.setItem(
-                            "img_data",
-                            JSON.stringify(pics)
-                          );
-                          this.setState({
-                            data: this.sortPics(pics)
-                          });
-                        }}
-                      />
-                    </Row>
-                  }
-                  description={timeAgo(pic.timestamp)}
-                />
-              </Card>
-            </Picture>
+            <PictureCard
+              key={index}
+              pic={pic}
+              onClick={() => {
+                let pics = this.state.data;
+                pics.splice(index, 1);
+                localStorage.setItem("img_data", JSON.stringify(pics));
+                this.setState({
+                  data: this.sortPics(pics)
+                });
+              }}
+            />
           ))}
         </Container>
       </div>
