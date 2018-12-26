@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/picshare/precache-manifest.9cd0ea342aa92ce1a8c5bc3b7f7c946b.js"
+  "/PicShare/precache-manifest.8e87f2ee2f807d0506a55c5d65fe5d88.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/picshare/index.html", {
+workbox.routing.registerNavigationRoute("/PicShare/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
