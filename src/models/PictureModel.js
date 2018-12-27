@@ -25,7 +25,7 @@ class PictureModel {
   };
 
   sortPics = data => {
-    return data.sort(function(x, y) {
+    return data.slice().sort(function(x, y) {
       return Date.parse(y.timestamp) - Date.parse(x.timestamp);
     });
   };

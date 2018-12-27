@@ -11,28 +11,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     extendObservable(this, {
-      url: "",
       modalVisible: false,
-      title: "",
-      search: "",
-      file: ""
+      search: ""
     });
   }
 
   showModal = () => {
     this.modalVisible = true;
-  };
-
-  handleOk = () => {
-    let pictureUrl = this.url;
-    if (!pictureUrl) pictureUrl = this.file.result;
-    PictureModel.addPic({
-      Image: pictureUrl,
-      title: this.title
-    });
-    this.modalVisible = false;
-    this.url = "";
-    this.title = "";
   };
 
   handleCancel = e => {
@@ -48,25 +33,6 @@ class App extends Component {
     // this.setState({ data: this.sortPics(searchData) });
   };
 
-  actionFileUpload = e => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve("/");
-      reader.onerror = error => reject(error);
-      reader.readAsDataURL(e);
-      this.file = reader;
-      this.url = "";
-    });
-  };
-
-  onUrlChange = e => {
-    this.url = e.target.value;
-  };
-
-  onTitleChange = e => {
-    this.title = e.target.value;
-  };
-
   render() {
     return (
       <div>
@@ -79,12 +45,6 @@ class App extends Component {
             visible={this.modalVisible}
             handleCancel={this.handleCancel}
             handleOk={this.handleOk}
-            url={this.url}
-            title={this.title}
-            onFileUpload={this.onFileUpload}
-            actionFileUpload={this.actionFileUpload}
-            onUrlChange={this.onUrlChange}
-            onTitleChange={this.onTitleChange}
           />
           {PictureModel.data.map((pic, index) => (
             <PictureCard
