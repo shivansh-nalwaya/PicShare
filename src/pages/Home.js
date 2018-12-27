@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import { observer } from "mobx-react";
 import { Container } from "../styles/Home";
 import Navbar from "../components/Navbar";
 import UploadModal from "../components/UploadModal";
 import PictureCard from "../components/PictureCard";
+import PictureModel from "../models/PictureModel";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       url: "",
       modalVisible: false,
       title: "",
@@ -17,19 +18,6 @@ class App extends Component {
       fileList: []
     };
   }
-
-  componentDidMount() {
-    this.setState({
-      data: this.sortPics(JSON.parse(localStorage.getItem("img_data")) || [])
-    });
-  }
-
-  sortPics = data => {
-    let pics = data.sort(function(x, y) {
-      return Date.parse(y.timestamp) - Date.parse(x.timestamp);
-    });
-    return pics;
-  };
 
   showModal = () => {
     this.setState({
@@ -40,14 +28,12 @@ class App extends Component {
   handleOk = () => {
     let pictureUrl = this.state.url;
     if (!pictureUrl) pictureUrl = this.state.file.result;
-    let new_data = this.state.data.concat({
+    PictureModel.addPic({
       Image: pictureUrl,
       timestamp: new Date(),
       title: this.state.title
     });
-    localStorage.setItem("img_data", JSON.stringify(new_data));
     this.setState({
-      data: this.sortPics(new_data),
       modalVisible: false,
       url: "",
       title: "",
@@ -62,12 +48,12 @@ class App extends Component {
   };
 
   onSearchInputChange = e => {
-    let text = e.target.value;
-    let searchData = JSON.parse(localStorage.getItem("img_data")).filter(d => {
-      if (text === "") return true;
-      return d.title.toLowerCase().startsWith(text.toLowerCase());
-    });
-    this.setState({ data: this.sortPics(searchData) });
+    // let text = e.target.value;
+    // let searchData = JSON.parse(localStorage.getItem("img_data")).filter(d => {
+    //   if (text === "") return true;
+    //   return d.title.toLowerCase().startsWith(text.toLowerCase());
+    // });
+    // this.setState({ data: this.sortPics(searchData) });
   };
 
   onFileUpload = e => {
@@ -94,15 +80,6 @@ class App extends Component {
     this.setState({ title: e.target.value });
   };
 
-  onAddPicture = index => {
-    let pics = this.state.data;
-    pics.splice(index, 1);
-    localStorage.setItem("img_data", JSON.stringify(pics));
-    this.setState({
-      data: this.sortPics(pics)
-    });
-  };
-
   render() {
     return (
       <div>
@@ -123,12 +100,12 @@ class App extends Component {
             onUrlChange={this.onUrlChange}
             onTitleChange={this.onTitleChange}
           />
-          {this.state.data.map((pic, index) => (
+          {PictureModel.data.map((pic, index) => (
             <PictureCard
               key={index}
               pic={pic}
               onClick={() => {
-                this.onAddPicture(index);
+                PictureModel.deletePic(index);
               }}
             />
           ))}
@@ -138,4 +115,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default observer(App);
