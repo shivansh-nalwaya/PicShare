@@ -24,22 +24,10 @@ class App extends Component {
     this.modalVisible = false;
   };
 
-  onSearchInputChange = e => {
-    // let text = e.target.value;
-    // let searchData = JSON.parse(localStorage.getItem("img_data")).filter(d => {
-    //   if (text === "") return true;
-    //   return d.title.toLowerCase().startsWith(text.toLowerCase());
-    // });
-    // this.setState({ data: this.sortPics(searchData) });
-  };
-
   render() {
     return (
       <div>
-        <Navbar
-          onInputChange={this.onSearchInputChange}
-          showModal={this.showModal}
-        />
+        <Navbar showModal={this.showModal} />
         <Container>
           <UploadModal
             visible={this.modalVisible}

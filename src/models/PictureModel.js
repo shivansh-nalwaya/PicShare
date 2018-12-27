@@ -24,6 +24,14 @@ class PictureModel {
     this.data = this.sortPics(pics);
   };
 
+  searchImage = text => {
+    let searchData = JSON.parse(localStorage.getItem("img_data")).filter(d => {
+      if (text === "") return true;
+      return d.title.toLowerCase().startsWith(text.toLowerCase());
+    });
+    this.data = this.sortPics(searchData);
+  };
+
   sortPics = data => {
     return data.slice().sort(function(x, y) {
       return Date.parse(y.timestamp) - Date.parse(x.timestamp);

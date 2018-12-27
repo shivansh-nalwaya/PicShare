@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Icon, Button, Row, Input, Col } from "antd";
 import { Logo, Nav } from "../styles/Navbar";
+import PictureModel from "../models/PictureModel";
 
 export default class Navbar extends Component {
   render() {
@@ -13,7 +14,7 @@ export default class Navbar extends Component {
           <Col span={8}>
             <Input
               placeholder="Search"
-              onChange={this.props.onInputChange}
+              onChange={e => PictureModel.searchImage(e.target.value)}
               prefix={
                 <Icon type="search" style={{ color: "rgba(0,0,0,.25)" }} />
               }
