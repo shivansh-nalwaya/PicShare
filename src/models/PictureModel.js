@@ -3,7 +3,7 @@ import { extendObservable } from "mobx";
 class PictureModel {
   constructor() {
     extendObservable(this, {
-      data: this.sortPics(JSON.parse(localStorage.getItem("img_data") || []))
+      data: this.sortPics(JSON.parse(localStorage.getItem("img_data")) || [])
     });
   }
 
