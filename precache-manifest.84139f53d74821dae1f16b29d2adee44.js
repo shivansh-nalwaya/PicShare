@@ -4,15 +4,15 @@ self.__precacheManifest = [
     "url": "/PicShare/static/js/runtime~main.8fc24bce.js"
   },
   {
-    "revision": "578fb2b51c93261e4b6c",
-    "url": "/PicShare/static/js/main.578fb2b5.chunk.js"
+    "revision": "8fe3f7005a4af1132d86",
+    "url": "/PicShare/static/js/main.8fe3f700.chunk.js"
   },
   {
     "revision": "fbb76d76df5aa540050d",
     "url": "/PicShare/static/js/1.fbb76d76.chunk.js"
   },
   {
-    "revision": "578fb2b51c93261e4b6c",
+    "revision": "8fe3f7005a4af1132d86",
     "url": "/PicShare/static/css/main.f933f4a0.chunk.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/PicShare/static/css/1.3d905701.chunk.css"
   },
   {
-    "revision": "351f8edaa0b61b9065d76525df0b3466",
+    "revision": "5367e00dd45640b0c4330f237b552c73",
     "url": "/PicShare/index.html"
   }
 ];
