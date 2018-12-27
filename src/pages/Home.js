@@ -5,46 +5,38 @@ import Navbar from "../components/Navbar";
 import UploadModal from "../components/UploadModal";
 import PictureCard from "../components/PictureCard";
 import PictureModel from "../models/PictureModel";
+import { extendObservable } from "mobx";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    extendObservable(this, {
       url: "",
       modalVisible: false,
       title: "",
       search: "",
-      file: "",
-      fileList: []
-    };
+      file: ""
+    });
   }
 
   showModal = () => {
-    this.setState({
-      modalVisible: true
-    });
+    this.modalVisible = true;
   };
 
   handleOk = () => {
-    let pictureUrl = this.state.url;
-    if (!pictureUrl) pictureUrl = this.state.file.result;
+    let pictureUrl = this.url;
+    if (!pictureUrl) pictureUrl = this.file.result;
     PictureModel.addPic({
       Image: pictureUrl,
-      timestamp: new Date(),
-      title: this.state.title
+      title: this.title
     });
-    this.setState({
-      modalVisible: false,
-      url: "",
-      title: "",
-      fileList: []
-    });
+    this.modalVisible = false;
+    this.url = "";
+    this.title = "";
   };
 
   handleCancel = e => {
-    this.setState({
-      modalVisible: false
-    });
+    this.modalVisible = false;
   };
 
   onSearchInputChange = e => {
@@ -56,28 +48,23 @@ class App extends Component {
     // this.setState({ data: this.sortPics(searchData) });
   };
 
-  onFileUpload = e => {
-    e.file.error = null;
-    e.file.status = "done";
-    this.setState({ fileList: [e.file] });
-  };
-
   actionFileUpload = e => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve("reader.result");
+      reader.onload = () => resolve("/");
       reader.onerror = error => reject(error);
       reader.readAsDataURL(e);
-      this.setState({ file: reader, url: "" });
+      this.file = reader;
+      this.url = "";
     });
   };
 
   onUrlChange = e => {
-    this.setState({ url: e.target.value });
+    this.url = e.target.value;
   };
 
   onTitleChange = e => {
-    this.setState({ title: e.target.value });
+    this.title = e.target.value;
   };
 
   render() {
@@ -89,12 +76,11 @@ class App extends Component {
         />
         <Container>
           <UploadModal
-            visible={this.state.modalVisible}
+            visible={this.modalVisible}
             handleCancel={this.handleCancel}
             handleOk={this.handleOk}
-            fileList={this.state.fileList}
-            url={this.state.url}
-            title={this.state.title}
+            url={this.url}
+            title={this.title}
             onFileUpload={this.onFileUpload}
             actionFileUpload={this.actionFileUpload}
             onUrlChange={this.onUrlChange}

@@ -31,4 +31,6 @@ class PictureModel {
   };
 }
 
-export default new PictureModel();
+const PICTURE_INSTANCE = new PictureModel();
+
+export default PICTURE_INSTANCE;

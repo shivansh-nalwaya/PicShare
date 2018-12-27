@@ -19,11 +19,7 @@ export default class UploadModal extends Component {
       >
         <Row type="flex" justify="center" align="middle">
           <Col span={8}>
-            <Upload
-              fileList={this.props.fileList}
-              onChange={this.props.onFileUpload}
-              action={this.props.actionFileUpload}
-            >
+            <Upload action={this.props.actionFileUpload}>
               <Button>
                 <Icon type="upload" /> Click to Upload
               </Button>
