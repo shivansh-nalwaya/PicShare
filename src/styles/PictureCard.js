@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 export const Picture = styled.div`
-  width: 30em;
-  display: inline-block;
-  padding: 1em;
+  padding: 0.8em 0.8em;
 `;
 
 export const Thumbnail = styled.div`

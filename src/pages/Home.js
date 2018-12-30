@@ -6,6 +6,7 @@ import UploadModal from "../components/UploadModal";
 import PictureCard from "../components/PictureCard";
 import PictureModel from "../models/PictureModel";
 import { extendObservable } from "mobx";
+import { Col, Row } from "antd";
 
 class App extends Component {
   constructor(props) {
@@ -34,15 +35,18 @@ class App extends Component {
             handleCancel={this.handleCancel}
             handleOk={this.handleOk}
           />
-          {PictureModel.data.map((pic, index) => (
-            <PictureCard
-              key={index}
-              pic={pic}
-              onClick={() => {
-                PictureModel.deletePic(index);
-              }}
-            />
-          ))}
+          <Row type="flex" justify="space-between">
+            {PictureModel.data.map((pic, index) => (
+              <Col lg={8} md={12} sm={24} xs={24} key={index}>
+                <PictureCard
+                  pic={pic}
+                  onClick={() => {
+                    PictureModel.deletePic(index);
+                  }}
+                />
+              </Col>
+            ))}
+          </Row>
         </Container>
       </div>
     );
