@@ -8,7 +8,7 @@ export const Thumbnail = styled.div`
   background-image: ${props => props.url || ""};
   background-size: 100%;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-size: cover;
   border-bottom: 1px solid #eeeeee;
   width: 27.84em;
   height: 18em;
