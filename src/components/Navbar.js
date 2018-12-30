@@ -11,7 +11,7 @@ export default class Navbar extends Component {
           <Col span={2}>
             <Logo>PicShare</Logo>
           </Col>
-          <Col span={8}>
+          <Col lg={8} md={8} sm={8} xs={0}>
             <Input
               placeholder="Search"
               onChange={e => PictureModel.searchImage(e.target.value)}
