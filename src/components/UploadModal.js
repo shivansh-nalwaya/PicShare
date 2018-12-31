@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Icon, Button, Row, Modal, Input, Col, Upload } from "antd";
 import { extendObservable } from "mobx";
 import { observer } from "mobx-react";
+import { Centerify } from "../styles/UploadModal";
 import PictureModel from "../models/PictureModel";
 
 class UploadModal extends Component {
@@ -53,23 +54,27 @@ class UploadModal extends Component {
         ]}
       >
         <Row type="flex" justify="center" align="middle">
-          <Col span={8}>
-            <Upload
-              fileList={this.fileList}
-              onChange={e => {
-                e.file.status = "done";
-                e.file.error = null;
-                this.fileList = [e.file];
-              }}
-              action={this.actionFileUpload}
-            >
-              <Button>
-                <Icon type="upload" /> Click to Upload
-              </Button>
-            </Upload>
+          <Col lg={8} md={8} sm={22} xs={22}>
+            <Centerify>
+              <Upload
+                fileList={this.fileList}
+                onChange={e => {
+                  e.file.status = "done";
+                  e.file.error = null;
+                  this.fileList = [e.file];
+                }}
+                action={this.actionFileUpload}
+              >
+                <Button>
+                  <Icon type="upload" /> Click to Upload
+                </Button>
+              </Upload>
+            </Centerify>
           </Col>
-          <Col span={2}>OR</Col>
-          <Col span={12}>
+          <Col lg={2} md={2} sm={22} xs={22}>
+            <Centerify>OR</Centerify>
+          </Col>
+          <Col lg={12} md={12} sm={22} xs={22}>
             <Input
               type="text"
               placeholder="Enter URL of the image"
