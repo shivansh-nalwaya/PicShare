@@ -59,9 +59,11 @@ class UploadModal extends Component {
               <Upload
                 fileList={this.fileList}
                 onChange={e => {
-                  e.file.status = "done";
-                  e.file.error = null;
-                  this.fileList = [e.file];
+                  let f = e.file;
+                  f.status = "done";
+                  f.error = null;
+                  f.name = f.name.substring(0, 10) + "...";
+                  this.fileList = [f];
                 }}
                 action={this.actionFileUpload}
               >

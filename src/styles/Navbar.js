@@ -7,6 +7,5 @@ export const Logo = styled.div`
 export const Nav = styled.div`
   padding-top: 1em;
   padding-bottom: 1em;
-  margin-bottom: 1em;
   border-bottom: 1px solid #eeeeee;
 `;

@@ -35,7 +35,7 @@ class App extends Component {
             handleCancel={this.handleCancel}
             handleOk={this.handleOk}
           />
-          <Row type="flex" justify="space-between">
+          <Row type="flex" justify="start">
             {PictureModel.data.map((pic, index) => (
               <Col lg={8} md={12} sm={24} xs={24} key={index}>
                 <PictureCard
