@@ -1,27 +1,10 @@
 const UserRepository = require("../repositories/UserRepository");
 
 module.exports = {
-  get: function(req, res) {
-    UserRepository.all()
-      .then(data => {
-        res.send({
-          success: true,
-          data
-        });
-      })
-      .catch(message => {
-        res.send({
-          success: false,
-          message
-        });
-      });
-  },
-
-  show: function(req, res) {
-    var id = req.params.id;
-    UserRepository.find(id)
-      .then(resp => {
-        result = resp[0];
+  login: function(req, res) {
+    const { email, password } = req.body;
+    UserRepository.login(email, password)
+      .then(result => {
         res.send({
           result
         });
@@ -34,7 +17,7 @@ module.exports = {
       });
   },
 
-  create: function(req, res) {
+  signup: function(req, res) {
     var data = req.body;
     UserRepository.create(data)
       .then(result => {

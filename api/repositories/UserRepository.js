@@ -1,21 +1,36 @@
 var User = require("../models/UserModel");
 
 module.exports = {
-  all: () => {
-    return User.find();
-  },
-
-  find: id => {
-    return User.find({ _id: id });
-  },
-
-  top: () => {
-    return User.find({ rank: { $lt: 4 } });
+  login: (email, password) => {
+    return new Promise((resolve, reject) => {
+      User.findOne({ email })
+        .then(user => {
+          if (user && user.validatePassword(password)) {
+            resolve(user);
+            user.generateJWT();
+          } else reject("Invalid password!");
+        })
+        .catch(err => {
+          console.log(err);
+          reject("Invalid email!");
+        });
+    });
   },
 
   create: data => {
-    var user = new User(data);
-    return user.save();
+    const { name, email, password } = data;
+    var user = new User({ name, email });
+    user.setPassword(password);
+    return new Promise((resolve, reject) => {
+      user
+        .save()
+        .then(user => {
+          resolve(user);
+        })
+        .catch(() => {
+          reject("Unable to sign up!");
+        });
+    });
   },
 
   update: (id, data) => {
