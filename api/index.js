@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const routes = require("./config/routes");
+const logger = require("morgan");
 var mongoose = require("./config/mongoose");
 
 const API_PORT = process.env.PORT || 3001;
@@ -14,6 +15,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(logger("dev"));
 app.use(cors());
 
 if (process.env.NODE_ENV === "production")

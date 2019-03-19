@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt-nodejs");
 var User = require("../models/UserModel");
 
 module.exports = {
@@ -5,9 +6,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       User.findOne({ email })
         .then(user => {
-          if (user && user.validatePassword(password)) {
+          if (user && bcrypt.compareSync(password, user.password)) {
+            user.generateToken();
             resolve(user);
-            user.generateJWT();
           } else reject("Invalid password!");
         })
         .catch(err => {
@@ -18,9 +19,7 @@ module.exports = {
   },
 
   create: data => {
-    const { name, email, password } = data;
-    var user = new User({ name, email });
-    user.setPassword(password);
+    var user = new User(data);
     return new Promise((resolve, reject) => {
       user
         .save()
