@@ -1,6 +1,4 @@
-import React from "react";
 import styled, { keyframes } from "styled-components";
-import Button from "antd/lib/button";
 
 export const Modal = styled.div`
   position: absolute;
@@ -67,40 +65,6 @@ export const Box = styled.div`
 
 export const TextHeading = styled.div`
   font-size: 1.8em;
+  margin-bottom: 10px;
   color: ${props => (props.primary ? "tomato" : "white")};
 `;
-
-export class StyledButton extends React.Component {
-  state = { hovered: false };
-
-  toggleHover = () => this.setState({ hovered: !this.state.hovered });
-
-  render() {
-    const basicStyles = {
-      backgroundColor: "transparent",
-      color: "white",
-      fontSize: "1.2em",
-      marginTop: 10,
-      paddingVertical: 14,
-      width: "50%"
-    };
-    const hoverStyles = {
-      borderColor: "tomato",
-      color: "tomato"
-    };
-    const styles = this.state.hovered
-      ? { ...basicStyles, ...hoverStyles }
-      : { ...basicStyles };
-    return (
-      <Button
-        size="large"
-        {...this.props}
-        onMouseEnter={this.toggleHover}
-        onMouseLeave={this.toggleHover}
-        style={styles}
-      >
-        {this.props.children}
-      </Button>
-    );
-  }
-}
