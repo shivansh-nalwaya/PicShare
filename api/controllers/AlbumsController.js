@@ -36,7 +36,6 @@ module.exports = {
 
   create: function(req, res) {
     var data = req.body;
-    console.log(req.userId);
     data.user = req.userId;
     AlbumRepository.create(data)
       .then(result => {
