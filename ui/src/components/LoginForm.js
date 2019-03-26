@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Icon, Input, Button, Row } from "antd";
+import { Form, Icon, Input, Row } from "antd";
 import { StyledButton } from "../styles/common";
 
 class LoginForm extends React.Component {
