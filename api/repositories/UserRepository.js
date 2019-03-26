@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt-nodejs");
-var User = require("../models/UserModel");
+const User = require("../models/UserModel");
 
 module.exports = {
   login: (email, password) => {
@@ -43,5 +43,9 @@ module.exports = {
 
   delete: id => {
     return User.deleteOne({ _id: id });
+  },
+
+  find_by_token: token => {
+    return User.findOne({ token });
   }
 };
