@@ -21,7 +21,7 @@ const rotate = keyframes`
 export const Login = styled.div`
   position: absolute;
   background-color: white;
-  animation: ${rotate} 0.1s linear;
+  animation: ${rotate} 0.2s linear;
   animation-fill-mode: forwards;
   animation-direction: reverse;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.7);
@@ -38,7 +38,7 @@ export const Signup = styled.div`
   background-color: white;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.7);
   height: 60%;
-  animation: ${rotate} 0.1s linear;
+  animation: ${rotate} 0.2s linear;
   animation-fill-mode: forwards;
   width: 33%;
   left: 18%;
