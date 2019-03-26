@@ -1,20 +1,22 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
+const AlbumModel = require("./AlbumModel");
 
-const UsersSchema = new mongoose.Schema({
+const UserModel = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
-  password: String,
-  token: String
+  password: { type: String, required: true },
+  token: String,
+  albums: [AlbumModel]
 });
 
-UsersSchema.pre("save", function(next) {
+UserModel.pre("save", function(next) {
   this.password = bcrypt.hashSync(this.password);
   next();
 });
 
-UsersSchema.methods.generateToken = function(cb) {
+UserModel.methods.generateToken = function(cb) {
   this.token = jwt.sign(
     {
       _id: this._id,
@@ -25,4 +27,4 @@ UsersSchema.methods.generateToken = function(cb) {
   this.save();
 };
 
-module.exports = mongoose.model("users", UsersSchema);
+module.exports = mongoose.model("users", UserModel);
