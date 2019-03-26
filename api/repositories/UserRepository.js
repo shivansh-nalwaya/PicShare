@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt-nodejs");
-const User = require("../models/UserModel");
+const User = require("../models").UserModel;
 
 module.exports = {
   login: (email, password) => {

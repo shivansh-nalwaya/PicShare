@@ -1,4 +1,5 @@
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
+const User = require("../repositories/UserRepository");
 
 module.exports = function(req, res, next) {
   var token = req.headers["x-access-token"];
@@ -6,12 +7,12 @@ module.exports = function(req, res, next) {
     return res
       .status(403)
       .send({ success: false, message: "No token provided." });
-  jwt.verify(token, "secret-key", function(err, decoded) {
-    if (err)
-      return res
-        .status(500)
-        .send({ auth: false, message: "Failed to authenticate token." });
-    req.userId = decoded.id;
-    next();
-  });
+  User.find_by_token(token)
+    .then(user => {
+      req.userId = user._id;
+      next();
+    })
+    .catch(err => {
+      res.status(500).send({ auth: false, message: err });
+    });
 };

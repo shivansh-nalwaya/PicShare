@@ -7,8 +7,7 @@ const UserModel = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  token: String,
-  albums: [AlbumModel]
+  token: String
 });
 
 UserModel.pre("save", function(next) {
@@ -27,4 +26,4 @@ UserModel.methods.generateToken = function(cb) {
   this.save();
 };
 
-module.exports = mongoose.model("users", UserModel);
+module.exports = UserModel;
