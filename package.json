@@ -3,5 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Shivansh Nalwaya <shivanshnalwaya@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"cd api && nodemon index.js\" \"cd ui && yarn start\"",
+    "build": "cd ui && yarn build",
+    "start": "cd api && node index.js"
+  },
+  "dependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10"
+  }
 }
