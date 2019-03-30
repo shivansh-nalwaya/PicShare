@@ -11,6 +11,7 @@ export default class App extends Component {
 
   render() {
     const { login } = this.state;
+    if (!this.props.visible) return null;
     return (
       <div>
         <Modal>
