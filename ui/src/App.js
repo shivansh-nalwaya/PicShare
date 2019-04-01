@@ -1,15 +1,15 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import { BrowserRouter as Router } from "react-router-dom";
+import Home from "./pages/Home";
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <Router>
         <NavBar />
+        <Route path="/" exact render={props => <Home {...props} />} />
       </Router>
     );
   }
 }
-
-export default App;
