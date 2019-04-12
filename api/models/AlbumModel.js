@@ -7,8 +7,7 @@ const AlbumModel = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user"
-  },
-  images: [ImageModel]
+  }
 });
 
 module.exports = AlbumModel;
