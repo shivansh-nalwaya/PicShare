@@ -12,9 +12,11 @@ class Home extends Component {
     if (AlbumModel.isLoading) return <div>Loading...</div>;
     return (
       <div>
-        {AlbumModel.all.map(a => {
-          return a.title;
-        })}
+        <ul>
+          {AlbumModel.all.map((album, index) => (
+            <li key={index}>{album.title}</li>
+          ))}
+        </ul>
       </div>
     );
   }

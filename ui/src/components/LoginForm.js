@@ -1,13 +1,14 @@
 import React from "react";
 import { Form, Icon, Input, Row } from "antd";
 import { StyledButton } from "../styles/common";
+import UserModel from "../models/UserModel";
 
 class LoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        UserModel.login(values);
       }
     });
   };
@@ -17,13 +18,13 @@ class LoginForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} style={{ marginTop: 20 }}>
         <Form.Item>
-          {getFieldDecorator("username", {
-            rules: [{ required: true, message: "Please input your username!" }]
+          {getFieldDecorator("email", {
+            rules: [{ required: true, message: "Please input your email!" }]
           })(
             <Input
               size="large"
               prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="Username"
+              placeholder="Email"
             />
           )}
         </Form.Item>

@@ -25,7 +25,7 @@ export default class StyledButton extends React.Component {
     return (
       <Button
         size="large"
-        {...this.props}
+        htmlType={this.props.htmlType}
         onMouseEnter={this.toggleHover}
         onMouseLeave={this.toggleHover}
         style={styles}
