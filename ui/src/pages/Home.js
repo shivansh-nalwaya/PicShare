@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 import AlbumModel from "../models/AlbumModel";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
   constructor(props) {
@@ -14,7 +15,9 @@ class Home extends Component {
       <div>
         <ul>
           {AlbumModel.all.map((album, index) => (
-            <li key={index}>{album.title}</li>
+            <li key={index}>
+              <Link to={`/${album._id}`}>{album.title}</Link>
+            </li>
           ))}
         </ul>
       </div>

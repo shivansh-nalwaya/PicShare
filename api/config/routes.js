@@ -7,4 +7,5 @@ module.exports = function(app) {
   app.post("/signup", UsersController.signup);
   app.post("/create", VerifyToken, AlbumsController.create);
   app.get("/", AlbumsController.get);
+  app.get("/:id", AlbumsController.show);
 };
