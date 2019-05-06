@@ -1,13 +1,13 @@
 import React from "react";
-import { Form, Icon, Input, Row } from "antd";
-import { StyledButton } from "../styles/common";
+import { Form, Icon, Input, Modal } from "antd";
+import UserModel from "../models/UserModel";
 
 class SignupForm extends React.Component {
-  handleSubmit = e => {
-    e.preventDefault();
+  handleSubmit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        UserModel.signup(values);
+        this.props.closeModal();
       }
     });
   };
@@ -15,55 +15,61 @@ class SignupForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} style={{ marginTop: 20 }}>
-        <Form.Item>
-          {getFieldDecorator("username", {
-            rules: [{ required: true, message: "Please input your username!" }]
-          })(
-            <Input
-              size="large"
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="Username"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("password", {
-            rules: [{ required: true, message: "Please input your Password!" }]
-          })(
-            <Input
-              size="large"
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              type="password"
-              placeholder="Password"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("password_confirmation", {
-            rules: [
-              {
-                required: true,
-                message: "Please input your Password confirmation!"
-              }
-            ]
-          })(
-            <Input
-              size="large"
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              type="password"
-              placeholder="Password Confirmation"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Row type="flex" justify="flex-end" align="middle">
-            <StyledButton primary htmlType="submit">
-              Sign Up
-            </StyledButton>
-          </Row>
-        </Form.Item>
-      </Form>
+      <Modal
+        title="Signup"
+        visible={this.props.visible}
+        okText="Signup"
+        onOk={this.handleSubmit}
+        onCancel={this.props.closeModal}
+      >
+        <Form>
+          <Form.Item>
+            {getFieldDecorator("email", {
+              rules: [{ required: true, message: "Please input your email!" }]
+            })(
+              <Input
+                size="large"
+                prefix={
+                  <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                placeholder="Email"
+              />
+            )}
+          </Form.Item>
+          <Form.Item>
+            {getFieldDecorator("password", {
+              rules: [
+                { required: true, message: "Please input your Password!" }
+              ]
+            })(
+              <Input
+                size="large"
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                type="password"
+                placeholder="Password"
+              />
+            )}
+          </Form.Item>
+          <Form.Item>
+            {getFieldDecorator("confirm_password", {
+              rules: [
+                { required: true, message: "Please confirm your Password!" }
+              ]
+            })(
+              <Input
+                size="large"
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                type="password"
+                placeholder="Conirm Password"
+              />
+            )}
+          </Form.Item>
+        </Form>
+      </Modal>
     );
   }
 }

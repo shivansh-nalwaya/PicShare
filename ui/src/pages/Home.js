@@ -13,6 +13,7 @@ class Home extends Component {
     if (AlbumModel.isLoading) return <div>Loading...</div>;
     return (
       <div>
+        Albums:
         <ul>
           {AlbumModel.all.map((album, index) => (
             <li key={index}>

@@ -1,55 +1,41 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-  Header,
-  HeaderContainer,
-  Logo,
-  HeaderNav,
-  HeaderNavItem,
-  HeaderNavItemLink,
-  HeaderNavItemSpan
-} from "../styles/NavbarStyles";
-import LoginModal from "./LoginModal";
-
-const NoStyleLink = props => (
-  <Link to={`${props.to}`} style={{ textDecoration: "none" }}>
-    {props.children}
-  </Link>
-);
+import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
+import { Button } from "antd";
 
 export default class NavBar extends React.Component {
-  state = { visible: false };
+  state = { loginVisible: false, signupVisible: false };
 
-  showModal = () => {
-    this.setState({ visible: true });
+  showLoginModal = () => {
+    this.setState({ loginVisible: true });
   };
 
-  closeModal = () => {
-    this.setState({ visible: false });
+  showSignupModal = () => {
+    this.setState({ signupVisible: true });
+  };
+
+  closeLoginModal = () => {
+    this.setState({ loginVisible: false });
+  };
+
+  closeSignupModal = () => {
+    this.setState({ signupVisible: false });
   };
 
   render() {
     return (
-      <Header>
-        <HeaderContainer>
-          <NoStyleLink to="/">
-            <Logo>PicShare</Logo>
-          </NoStyleLink>
-          <HeaderNav>
-            <HeaderNavItem>
-              <NoStyleLink to="/">
-                <HeaderNavItemLink>Home</HeaderNavItemLink>
-                <HeaderNavItemSpan />
-              </NoStyleLink>
-            </HeaderNavItem>
-            <HeaderNavItem onClick={this.showModal}>
-              <HeaderNavItemLink>Login</HeaderNavItemLink>
-              <HeaderNavItemSpan />
-            </HeaderNavItem>
-          </HeaderNav>
-        </HeaderContainer>
-        <LoginModal visible={this.state.visible} />
-      </Header>
+      <React.Fragment>
+        <Button onClick={this.showLoginModal}>Login</Button>
+        <LoginForm
+          visible={this.state.loginVisible}
+          closeModal={this.closeLoginModal}
+        />
+        <Button onClick={this.showSignupModal}>Signup</Button>
+        <SignupForm
+          visible={this.state.signupVisible}
+          closeModal={this.closeSignupModal}
+        />
+      </React.Fragment>
     );
   }
 }

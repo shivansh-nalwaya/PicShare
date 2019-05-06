@@ -13,7 +13,7 @@ class Album extends Component {
   }
 
   render() {
-    return <div>{this.album.title}</div>;
+    return <div>Name : {this.album.title}</div>;
   }
 }
 
