@@ -11,7 +11,7 @@ const UserModel = new mongoose.Schema({
 });
 
 UserModel.pre("save", function(next) {
-  this.password = bcrypt.hashSync(this.password);
+  if (this.isNew) this.password = bcrypt.hashSync(this.password);
   next();
 });
 
