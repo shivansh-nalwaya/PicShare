@@ -16,7 +16,7 @@ class Album extends Component {
   render() {
     const props = {
       name: "file",
-      action: "",
+      action: "http://localhost:3001/api/upload",
       headers: {
         authorization: "authorization-text"
       },
