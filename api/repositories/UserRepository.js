@@ -12,10 +12,18 @@ module.exports = {
           } else reject("Invalid password!");
         })
         .catch(err => {
-          console.log(err);
           reject("Invalid email!");
         });
     });
+  },
+
+  logout: email => {
+    return User.findOneAndUpdate(
+      { email },
+      {
+        $set: { token: null }
+      }
+    );
   },
 
   create: data => {

@@ -18,6 +18,23 @@ module.exports = {
       });
   },
 
+  logout: function(req, res) {
+    const { email } = req.body;
+    UserRepository.logout(email)
+      .then(result => {
+        res.send({
+          result
+        });
+      })
+      .catch(message => {
+        res.status(422);
+        res.send({
+          success: false,
+          message
+        });
+      });
+  },
+
   signup: function(req, res) {
     var data = req.body;
     UserRepository.create(data)
