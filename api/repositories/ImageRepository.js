@@ -1,6 +1,7 @@
 const Image = require("../models").ImageModel;
 const fs = require("fs");
 const path = require("path");
+const uuidv4 = require("uuid/v4");
 
 module.exports = {
   all: () => {
@@ -12,11 +13,11 @@ module.exports = {
   },
 
   create: (data, file) => {
-    console.log(data, file);
     const tempPath = file.path;
-    const targetPath = path.join(__dirname, `../uploads/${file.originalname}`);
+    const name = uuidv4() + path.extname(file.originalname);
+    const targetPath = path.join(__dirname, `../uploads/${name}`);
     fs.rename(tempPath, targetPath, err => {});
-    let sanitizedData = { name: file.originalname };
+    let sanitizedData = { name, title: file.originalname, ...data };
     var image = new Image(sanitizedData);
     return image.save();
   },

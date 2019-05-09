@@ -20,6 +20,7 @@ class Album extends Component {
       headers: {
         authorization: "authorization-text"
       },
+      data: { album: this.props.match.params.id },
       onChange(info) {
         if (info.file.status !== "uploading") {
           console.log(info.file, info.fileList);
