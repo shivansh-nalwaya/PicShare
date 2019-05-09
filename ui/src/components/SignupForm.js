@@ -1,13 +1,24 @@
 import React from "react";
-import { Form, Icon, Input, Modal } from "antd";
+import { Form, Icon, Input, Modal, message } from "antd";
 import UserModel from "../models/UserModel";
 
 class SignupForm extends React.Component {
+  state = { saving: false };
+
   handleSubmit = () => {
+    this.setState({ saving: true });
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        UserModel.signup(values);
-        this.props.closeModal();
+        UserModel.signup(values)
+          .then(() => {
+            this.setState({ saving: false });
+            message.success("Signup successful");
+            this.props.closeModal();
+          })
+          .catch(err => {
+            message.error(err);
+            this.setState({ saving: false });
+          });
       }
     });
   };
@@ -19,10 +30,24 @@ class SignupForm extends React.Component {
         title="Signup"
         visible={this.props.visible}
         okText="Signup"
+        confirmLoading={this.state.saving}
         onOk={this.handleSubmit}
         onCancel={this.props.closeModal}
       >
         <Form>
+          <Form.Item>
+            {getFieldDecorator("name", {
+              rules: [{ required: true, message: "Please input you name!" }]
+            })(
+              <Input
+                size="large"
+                prefix={
+                  <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                placeholder="Name"
+              />
+            )}
+          </Form.Item>
           <Form.Item>
             {getFieldDecorator("email", {
               rules: [{ required: true, message: "Please input your email!" }]
@@ -49,22 +74,6 @@ class SignupForm extends React.Component {
                 }
                 type="password"
                 placeholder="Password"
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            {getFieldDecorator("confirm_password", {
-              rules: [
-                { required: true, message: "Please confirm your Password!" }
-              ]
-            })(
-              <Input
-                size="large"
-                prefix={
-                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                }
-                type="password"
-                placeholder="Conirm Password"
               />
             )}
           </Form.Item>

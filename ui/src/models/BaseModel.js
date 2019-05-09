@@ -1,6 +1,9 @@
 export default class BaseModel {
   constructor(api) {
     this.baseApi = "http://localhost:3001";
+    this.currentUserToken = (
+      JSON.parse(localStorage.getItem("currentUser")) || {}
+    ).token;
     this.api = api;
   }
 
@@ -14,8 +17,7 @@ export default class BaseModel {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "x-access-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2QwMWNhNDYyYTRiYTY3ODMzMDY0YjciLCJlbWFpbCI6InNoaXZhbnNoQGdtYWlsLmNvbSIsImlhdCI6MTU1NzE0MjY5N30.aatx_Sqnxwbms765MXe2qUiGsraYk4mo1LduZHq_CTY"
+        "x-access-token": this.currentUserToken
       },
       body: JSON.stringify(data)
     }).then(data => data.json());

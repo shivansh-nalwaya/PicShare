@@ -4,7 +4,7 @@ const VerifyToken = require("./VerifyToken");
 
 module.exports = function(app) {
   app.post("/login", UsersController.login);
-  app.get("/logout", UsersController.login);
+  app.post("/logout", UsersController.logout);
   app.post("/signup", UsersController.signup);
 
   app.post("/albums", VerifyToken, AlbumsController.create);

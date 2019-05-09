@@ -3,7 +3,7 @@ import { extendObservable } from "mobx";
 
 class AlbumModel extends BaseModel {
   constructor() {
-    super("api/");
+    super("api/albums");
     extendObservable(this, {
       all: [],
       isLoading: true

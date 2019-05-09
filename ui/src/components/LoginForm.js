@@ -1,13 +1,24 @@
 import React from "react";
-import { Form, Icon, Input, Modal } from "antd";
+import { Form, Icon, Input, Modal, message } from "antd";
 import UserModel from "../models/UserModel";
 
 class LoginForm extends React.Component {
+  state = { saving: false };
+
   handleSubmit = () => {
+    this.setState({ saving: true });
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        UserModel.login(values);
-        this.props.closeModal();
+        UserModel.login(values)
+          .then(() => {
+            message.success("Login successful");
+            this.props.closeModal();
+            this.setState({ saving: false });
+          })
+          .catch(err => {
+            message.error(err);
+            this.setState({ saving: false });
+          });
       }
     });
   };
@@ -19,6 +30,7 @@ class LoginForm extends React.Component {
         title="Login"
         visible={this.props.visible}
         okText="Login"
+        confirmLoading={this.state.saving}
         onOk={this.handleSubmit}
         onCancel={this.props.closeModal}
       >
