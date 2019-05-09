@@ -1,4 +1,6 @@
 const Image = require("../models").ImageModel;
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   all: () => {
@@ -9,8 +11,13 @@ module.exports = {
     return Image.find({ _id: id }).populate("album", "title");
   },
 
-  create: data => {
-    var image = new Image(data);
+  create: (data, file) => {
+    console.log(data, file);
+    const tempPath = file.path;
+    const targetPath = path.join(__dirname, `../uploads/${file.originalname}`);
+    fs.rename(tempPath, targetPath, err => {});
+    let sanitizedData = { name: file.originalname };
+    var image = new Image(sanitizedData);
     return image.save();
   },
 

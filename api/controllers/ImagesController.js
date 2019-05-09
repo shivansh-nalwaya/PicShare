@@ -1,13 +1,4 @@
 const ImageRepository = require("../repositories/ImageRepository");
-const fs = require("fs");
-const path = require("path");
-
-const handleError = (err, res) => {
-  res
-    .status(500)
-    .contentType("text/plain")
-    .end("Oops! Something went wrong!");
-};
 
 module.exports = {
   get: function(req, res) {
@@ -45,7 +36,8 @@ module.exports = {
 
   create: function(req, res) {
     var data = req.body;
-    ImageRepository.create(data)
+    var file = req.file;
+    ImageRepository.create(data, file)
       .then(result => {
         res.send({
           success: true,
@@ -58,31 +50,6 @@ module.exports = {
           message
         });
       });
-  },
-
-  upload: function(req, res) {
-    const tempPath = req.file.path;
-    const targetPath = path.join(__dirname, "../uploads/image.png");
-
-    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-      fs.rename(tempPath, targetPath, err => {
-        if (err) return handleError(err, res);
-
-        res
-          .status(200)
-          .contentType("text/plain")
-          .end("File uploaded!");
-      });
-    } else {
-      fs.unlink(tempPath, err => {
-        if (err) return handleError(err, res);
-
-        res
-          .status(403)
-          .contentType("text/plain")
-          .end("Only .png files are allowed!");
-      });
-    }
   },
 
   update: function(req, res) {

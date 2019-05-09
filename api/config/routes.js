@@ -18,5 +18,5 @@ module.exports = function(app) {
   app.get("/albums", AlbumsController.get);
   app.get("/albums/:id", AlbumsController.show);
 
-  app.post("/upload", upload.single("file"), ImagesController.upload);
+  app.post("/upload", upload.single("file"), ImagesController.create);
 };
