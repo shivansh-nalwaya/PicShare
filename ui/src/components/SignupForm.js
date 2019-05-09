@@ -1,14 +1,15 @@
 import React from "react";
 import { Form, Icon, Input, Modal, message } from "antd";
 import UserModel from "../models/UserModel";
+import { handleErrors } from "../models/ErrorHandler";
 
 class SignupForm extends React.Component {
   state = { saving: false };
 
   handleSubmit = () => {
-    this.setState({ saving: true });
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.setState({ saving: true });
         UserModel.signup(values)
           .then(() => {
             this.setState({ saving: false });
@@ -16,7 +17,7 @@ class SignupForm extends React.Component {
             this.props.closeModal();
           })
           .catch(err => {
-            message.error(err);
+            handleErrors(err);
             this.setState({ saving: false });
           });
       }

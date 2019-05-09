@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import { Input, Button } from "antd";
 import AlbumModel from "../models/AlbumModel";
+import { handleErrors } from "../models/ErrorHandler";
 
 class Home extends Component {
   constructor(props) {
@@ -13,9 +14,11 @@ class Home extends Component {
 
   createAlbum = () => {
     if (this.state.newAlbum === "") return;
-    AlbumModel.create({ title: this.state.newAlbum }).then(() => {
-      AlbumModel.getAll();
-    });
+    AlbumModel.create({ title: this.state.newAlbum })
+      .then(res => {
+        AlbumModel.getAll();
+      })
+      .catch(handleErrors);
   };
 
   render() {
@@ -26,7 +29,9 @@ class Home extends Component {
         <ul>
           {AlbumModel.all.map((album, index) => (
             <li key={index}>
-              <Link to={`/${album._id}`}>{album.title}</Link>
+              <Link to={`/${album._id}`}>
+                {album.title} - By {album.user.name}
+              </Link>
             </li>
           ))}
         </ul>

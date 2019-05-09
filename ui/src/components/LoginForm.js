@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Icon, Input, Modal, message } from "antd";
 import UserModel from "../models/UserModel";
+import { handleErrors } from "../models/ErrorHandler";
 
 class LoginForm extends React.Component {
   state = { saving: false };
@@ -16,7 +17,7 @@ class LoginForm extends React.Component {
             this.setState({ saving: false });
           })
           .catch(err => {
-            message.error(err);
+            handleErrors(err);
             this.setState({ saving: false });
           });
       }

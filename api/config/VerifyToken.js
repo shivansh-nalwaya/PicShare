@@ -13,6 +13,6 @@ module.exports = function(req, res, next) {
       next();
     })
     .catch(err => {
-      res.status(500).send({ auth: false, message: err });
+      res.status(422).send({ auth: false, message: "Need to login." });
     });
 };

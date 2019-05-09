@@ -36,6 +36,8 @@ class Album extends Component {
         <br />
         Name : {this.album.title}
         <br />
+        By : {this.album.user ? this.album.user.name : ""}
+        <br />
         Upload Image :{" "}
         <Upload {...props}>
           <Button>

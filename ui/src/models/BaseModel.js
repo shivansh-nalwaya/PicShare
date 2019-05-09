@@ -1,3 +1,5 @@
+import { handleReponse } from "./ErrorHandler";
+
 export default class BaseModel {
   constructor(api) {
     this.baseApi = "http://localhost:3001";
@@ -8,7 +10,7 @@ export default class BaseModel {
   }
 
   find = id => {
-    return fetch(`${this.baseApi}/${this.api}/${id}`).then(data => data.json());
+    return fetch(`${this.baseApi}/${this.api}/${id}`).then(handleReponse);
   };
 
   create = data => {
@@ -20,13 +22,13 @@ export default class BaseModel {
         "x-access-token": this.currentUserToken
       },
       body: JSON.stringify(data)
-    }).then(data => data.json());
+    }).then(handleReponse);
   };
 
   delete = id => {
     return fetch(`${this.baseApi}/${this.api}/${id}`, {
       method: "delete"
-    }).then(data => data.json());
+    }).then(handleReponse);
   };
 
   update = (id, data) => {
@@ -37,6 +39,6 @@ export default class BaseModel {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
-    }).then(data => data.json());
+    }).then(handleReponse);
   };
 }

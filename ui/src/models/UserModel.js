@@ -1,4 +1,5 @@
 import { extendObservable } from "mobx";
+import { handleReponse, handleErrors } from "./ErrorHandler";
 
 class UserModel {
   constructor() {
@@ -19,12 +20,12 @@ class UserModel {
       },
       body: JSON.stringify(values)
     })
-      .then(data => data.json())
+      .then(handleReponse)
       .then(res => {
         this.currentUser = res.result;
         localStorage.setItem("currentUser", JSON.stringify(res.result));
       })
-      .catch(err => console.log("err", err));
+      .catch(handleErrors);
   };
 
   signup = values => {
@@ -36,9 +37,9 @@ class UserModel {
       },
       body: JSON.stringify(values)
     })
-      .then(data => data.json())
+      .then(handleReponse)
       .then(res => {})
-      .catch(err => console.log("err", err));
+      .catch(handleErrors);
   };
 
   logout = () => {
@@ -50,12 +51,12 @@ class UserModel {
       },
       body: JSON.stringify({ email: this.currentUser.email })
     })
-      .then(data => data.json())
+      .then(handleReponse)
       .then(() => {
         this.currentUser = null;
         localStorage.clear();
       })
-      .catch(err => console.log("err", err));
+      .catch(handleErrors);
   };
 }
 

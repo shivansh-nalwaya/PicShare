@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
-const AlbumModel = require("./AlbumModel");
 
 const UserModel = new mongoose.Schema({
   name: { type: String, required: true },
