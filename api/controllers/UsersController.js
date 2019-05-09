@@ -45,6 +45,7 @@ module.exports = {
         });
       })
       .catch(message => {
+        res.status(422);
         res.send({
           success: false,
           message

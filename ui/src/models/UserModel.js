@@ -1,5 +1,5 @@
 import { extendObservable } from "mobx";
-import { handleReponse, handleErrors } from "./ErrorHandler";
+import { handleReponse } from "./ErrorHandler";
 
 class UserModel {
   constructor() {
@@ -24,8 +24,7 @@ class UserModel {
       .then(res => {
         this.currentUser = res.result;
         localStorage.setItem("currentUser", JSON.stringify(res.result));
-      })
-      .catch(handleErrors);
+      });
   };
 
   signup = values => {
@@ -36,10 +35,7 @@ class UserModel {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(values)
-    })
-      .then(handleReponse)
-      .then(res => {})
-      .catch(handleErrors);
+    }).then(handleReponse);
   };
 
   logout = () => {
@@ -55,8 +51,7 @@ class UserModel {
       .then(() => {
         this.currentUser = null;
         localStorage.clear();
-      })
-      .catch(handleErrors);
+      });
   };
 }
 
