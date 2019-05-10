@@ -2,10 +2,11 @@ const Image = require("../models").ImageModel;
 const fs = require("fs");
 const path = require("path");
 const uuidv4 = require("uuid/v4");
+var ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = {
-  all: () => {
-    return Image.find().populate("album", "title");
+  all: album => {
+    return Image.find({ album: ObjectId(album) }).populate("album", "title");
   },
 
   find: id => {

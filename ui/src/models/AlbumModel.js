@@ -6,6 +6,7 @@ class AlbumModel extends BaseModel {
     super("api/albums");
     extendObservable(this, {
       all: [],
+      images: [],
       isLoading: true
     });
   }
@@ -19,6 +20,17 @@ class AlbumModel extends BaseModel {
           return e;
         });
         this.isLoading = false;
+      });
+  };
+
+  getImages = id => {
+    return fetch(`${this.baseApi}/api/${id}/images`)
+      .then(data => data.json())
+      .then(res => {
+        this.images = res.data.map(e => {
+          e.key = e._id;
+          return e;
+        });
       });
   };
 }

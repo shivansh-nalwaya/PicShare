@@ -2,7 +2,8 @@ const ImageRepository = require("../repositories/ImageRepository");
 
 module.exports = {
   get: function(req, res) {
-    ImageRepository.all()
+    var album_id = req.params.album_id;
+    ImageRepository.all(album_id)
       .then(data => {
         res.send({
           success: true,
