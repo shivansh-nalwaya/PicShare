@@ -14,6 +14,9 @@ export default class BaseModel {
   };
 
   create = data => {
+    this.currentUserToken = (
+      JSON.parse(localStorage.getItem("currentUser")) || {}
+    ).token;
     return fetch(`${this.baseApi}/${this.api}`, {
       method: "post",
       mode: "cors",
@@ -32,11 +35,15 @@ export default class BaseModel {
   };
 
   update = (id, data) => {
+    this.currentUserToken = (
+      JSON.parse(localStorage.getItem("currentUser")) || {}
+    ).token;
     return fetch(`${this.baseApi}/${this.api}/${id}`, {
       method: "put",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "x-access-token": this.currentUserToken
       },
       body: JSON.stringify(data)
     }).then(handleReponse);
