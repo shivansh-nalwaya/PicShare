@@ -7,6 +7,16 @@ import { Upload, Button, message, Icon } from "antd";
 class Album extends Component {
   constructor(props) {
     super(props);
+    const isLocalhost = Boolean(
+      window.location.hostname === "localhost" ||
+        window.location.hostname === "[::1]" ||
+        window.location.hostname.match(
+          /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+        )
+    );
+    this.baseApi = isLocalhost
+      ? "http://localhost:3001"
+      : "https://my-picshare.herokuapp.com";
     extendObservable(this, { album: {} });
     AlbumModel.getImages(props.match.params.id);
     AlbumModel.find(props.match.params.id).then(data => {
@@ -17,7 +27,7 @@ class Album extends Component {
   render() {
     const props = {
       name: "file",
-      action: "http://localhost:3001/api/upload",
+      action: `${this.baseApi}/api/upload`,
       headers: {
         authorization: "authorization-text"
       },

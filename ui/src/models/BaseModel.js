@@ -2,7 +2,16 @@ import { handleReponse } from "./ErrorHandler";
 
 export default class BaseModel {
   constructor(api) {
-    this.baseApi = "http://localhost:3001";
+    const isLocalhost = Boolean(
+      window.location.hostname === "localhost" ||
+        window.location.hostname === "[::1]" ||
+        window.location.hostname.match(
+          /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+        )
+    );
+    this.baseApi = isLocalhost
+      ? "http://localhost:3001"
+      : "https://my-picshare.herokuapp.com";
     this.currentUserToken = (
       JSON.parse(localStorage.getItem("currentUser")) || {}
     ).token;
