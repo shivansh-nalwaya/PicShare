@@ -55,7 +55,7 @@ class Album extends Component {
           return (
             <div key={image.key}>
               <img
-                src={`http://localhost:3001/images/${image.name}`}
+                src={`${this.baseApi}/images/${image.name}`}
                 width="200"
                 alt={image.title}
               />
