@@ -1,9 +1,19 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Button } from "antd";
+
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import UserModel from "../models/UserModel";
+import {
+  Header,
+  HeaderContainer,
+  Logo,
+  HeaderNav,
+  HeaderNavItem,
+  HeaderNavItemLink,
+  HeaderNavItemSpan,
+  NoStyleLink
+} from "../styles/NavBar";
 
 class NavBar extends React.Component {
   state = { loginVisible: false, signupVisible: false };
@@ -26,27 +36,52 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        {UserModel.currentUser ? (
-          <div>
-            Logged in as {UserModel.currentUser.name}
-            <Button onClick={UserModel.logout}>Logout</Button>
-          </div>
-        ) : (
-          <React.Fragment>
-            <Button onClick={this.showLoginModal}>Login</Button>
-            <LoginForm
-              visible={this.state.loginVisible}
-              closeModal={this.closeLoginModal}
-            />
-            <Button onClick={this.showSignupModal}>Signup</Button>
-            <SignupForm
-              visible={this.state.signupVisible}
-              closeModal={this.closeSignupModal}
-            />
-          </React.Fragment>
-        )}
-      </React.Fragment>
+      <Header>
+        <HeaderContainer>
+          <NoStyleLink to="/">
+            <Logo>PicShare</Logo>
+          </NoStyleLink>
+          <HeaderNav>
+            <HeaderNavItem>
+              <NoStyleLink to="/">
+                <HeaderNavItemLink>Home</HeaderNavItemLink>
+                <HeaderNavItemSpan />
+              </NoStyleLink>
+            </HeaderNavItem>
+            {UserModel.currentUser ? (
+              <HeaderNavItem>
+                <HeaderNavItemLink onClick={UserModel.logout}>
+                  Logout
+                </HeaderNavItemLink>
+                <HeaderNavItemSpan />
+              </HeaderNavItem>
+            ) : (
+              <React.Fragment>
+                <HeaderNavItem>
+                  <HeaderNavItemLink onClick={this.showLoginModal}>
+                    Login
+                  </HeaderNavItemLink>
+                  <HeaderNavItemSpan />
+                  <LoginForm
+                    visible={this.state.loginVisible}
+                    closeModal={this.closeLoginModal}
+                  />
+                </HeaderNavItem>
+                <HeaderNavItem>
+                  <HeaderNavItemLink onClick={this.showSignupModal}>
+                    Signup
+                  </HeaderNavItemLink>
+                  <HeaderNavItemSpan />
+                  <SignupForm
+                    visible={this.state.signupVisible}
+                    closeModal={this.closeSignupModal}
+                  />
+                </HeaderNavItem>
+              </React.Fragment>
+            )}
+          </HeaderNav>
+        </HeaderContainer>
+      </Header>
     );
   }
 }
